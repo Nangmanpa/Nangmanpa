@@ -55,7 +55,7 @@ struct MoneyInputView: View {
                 .padding(.vertical, 12)
                 .background(
                     RoundedRectangle(cornerRadius: 15)
-                        .foregroundStyle(Color.white1)
+                        .foregroundStyle(Color(red: 0.97, green: 0.97, blue: 0.97))
                         .shadow(color: .black.opacity(0.1), radius: 2, x: 0, y: 0)
                 )
                 .frame(maxWidth: .infinity, alignment: .center)
