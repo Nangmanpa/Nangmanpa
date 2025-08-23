@@ -9,10 +9,16 @@ import SwiftUI
 
 struct ContentView: View {
     // MARK: Properties
+    let isFirst: Bool = InputModel.load() == nil
     
     // MARK: view
     var body: some View {
         NavigationStack {
+            if !isFirst {
+                PredictView()
+            } else {
+                OnboardingView()
+            }
         }
     }
 }
