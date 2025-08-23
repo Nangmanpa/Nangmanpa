@@ -24,11 +24,11 @@ struct TypeInputView: View {
                     .padding(.top, 10)
                     .padding(.bottom, 16)
                 
-                Text("공사가 진행중인 건축물의\n소분류가 어떻게 되나요?")
+                Text("What is the subcategory\nof the building under construction?")
                     .font(NMFont.pre_semibold_22)
                     .multilineTextAlignment(.leading)
                 
-                Text("해당되는 시설물 소분류를 선택해주세요")
+                Text("Please select the applicable facility subcategory")
                     .font(NMFont.pre_regular_16)
                     .padding(.bottom, 28)
             }

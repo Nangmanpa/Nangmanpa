@@ -93,7 +93,7 @@ struct InfoInputView: View {
                             pageOrder += 1
                         }
                     } label: {
-                        Text("다음")
+                        Text("Next")
                             .font(NMFont.pre_semibold_17)
                             .foregroundStyle(Color.white)
                             .padding(.vertical, 16)
@@ -112,7 +112,7 @@ struct InfoInputView: View {
                         inputData.save()
                         router.push(.predict)
                     } label: {
-                        Text("사고 예측하기")
+                        Text("Predicting accidents")
                             .font(NMFont.pre_semibold_17)
                             .foregroundStyle(Color.white)
                             .padding(.vertical, 16)

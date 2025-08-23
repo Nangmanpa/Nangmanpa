@@ -26,15 +26,15 @@ extension FacilityType {
     var name: String {
         switch self {
         case .apartment:
-            "공동주택"
+            "Residential Complex"
         case .factory:
-            "공장"
+            "Industrial Facility"
         case .office:
-            "업무시설"
+            "Office Building"
         case .educationResearch:
-            "교육연구시설"
+            "Educational/Research Facility"
         case .neighborhoodLife:
-            "근린생활시설"
+            "Neighborhood Living Facility"
         }
     }
 

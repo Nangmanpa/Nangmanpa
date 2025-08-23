@@ -30,39 +30,39 @@ enum HowMoneyBig: Int, CaseIterable, Codable {
     var description: String {
         switch self {
         case .under10Million:
-            "1,000만원 미만"
+            "under ₩10M"
         case .from10To20Million:
-            "1,000만 ~ 2,000만원 미만"
+            "₩10M – under ₩20M"
         case .from20To40Million:
-            "2,000만 ~ 4,000만원 미만"
+            "₩20M – under ₩40M"
         case .from40MillionTo100Million:
-            "4,000만 ~ 1억원 미만"
+            "₩40M – under ₩100M"
         case .from100MillionTo200Million:
-            "1억 ~ 2억원 미만"
+            "₩100M – under ₩200M"
         case .from200MillionTo300Million:
-            "2억 ~ 3억원 미만"
+            "₩200M – under ₩300M"
         case .from300MillionTo500Million:
-            "3억 ~ 5억원 미만"
+            "₩300M – under ₩500M"
         case .from500MillionTo1Billion:
-            "5억 ~ 10억원 미만"
+            "₩500M – under ₩1B"
         case .from1To2Billion:
-            "10억 ~ 20억원 미만"
+            "₩1B – under ₩2B"
         case .from2To5Billion:
-            "20억 ~ 50억원 미만"
+            "₩2B – under ₩5B"
         case .from5To10Billion:
-            "50억 ~ 100억원 미만"
+            "₩5B – under ₩10B"
         case .from10To15Billion:
-            "100억 ~ 150억원 미만"
+            "₩10B – under ₩15B"
         case .from15To20Billion:
-            "150억 ~ 200억원 미만"
+            "₩15B – under ₩20B"
         case .from20To30Billion:
-            "200억 ~ 300억원 미만"
+            "₩20B – under ₩30B"
         case .from30To50Billion:
-            "300억 ~ 500억원 미만"
+            "₩30B – under ₩50B"
         case .from50To100Billion:
-            "500억 ~ 1,000억원 미만"
+            "₩50B – under ₩100B"
         case .over100Billion:
-            "1,000억원 이상"
+            "₩100B+"
         }
     }
 }

@@ -23,18 +23,18 @@ struct ExtentInputView: View {
                     .padding(.top, 10)
                     .padding(.bottom, 16)
                 
-                Text("공사 현장의 면적이 어떻게 되나요?")
+                Text("How large is the construction site?")
                     .font(NMFont.pre_semibold_22)
                     .multilineTextAlignment(.leading)
                 
-                Text("공사 현장의 면적을 숫자만 입력해주세요")
+                Text("Please enter the area of the construction site as a number only")
                     .font(NMFont.pre_regular_16)
             }
             .foregroundStyle(.text1)
             .padding(.bottom, 10)
             
             HStack {
-                TextField("공사 현장의 면적", text: $extentText)
+                TextField("Area of the construction site", text: $extentText)
                     .keyboardType(.numberPad)
                     .font(NMFont.pre_semibold_17)
                 

@@ -28,27 +28,24 @@ struct FloorInputView: View {
                     .padding(.top, 10)
                     .padding(.bottom, 16)
                 
-                Text("건축물의 지상 및 지하의 층수가\n어떻게 되나요?")
+                Text("What are the number of \nabove-ground and underground\nfloors of the building?")
                     .font(NMFont.pre_semibold_22)
                     .multilineTextAlignment(.leading)
                 
-                Text("지상의 층수와 지하의 층수를 각각 입력해주세요")
+                Text("Please enter the number of above-ground and underground floors separately")
                     .font(NMFont.pre_regular_16)
             }
             .foregroundStyle(.text1)
             .padding(.bottom, 10)
             
             VStack(alignment: .leading, spacing: 0) {
-                Text("지상")
+                Text("Above-ground floors")
                     .font(NMFont.pre_semibold_20)
                     .padding(.bottom, 12)
                 
                 HStack {
-                    TextField("지상 층수", text: $groundFloorText)
+                    TextField("above-ground floors", text: $groundFloorText)
                         .keyboardType(.numberPad)
-                        .font(NMFont.pre_semibold_17)
-                    
-                    Text("층")
                         .font(NMFont.pre_semibold_17)
                 }
                 .padding(.horizontal, 24)
@@ -63,17 +60,14 @@ struct FloorInputView: View {
                 )
                 .padding(.bottom, 16)
                 
-                Text("지하")
+                Text("Underground floors")
                     .font(NMFont.pre_semibold_20)
                     .padding(.bottom, 12)
                 
                 HStack {                    
-                    TextField("지하 층수", text: $basementFloorText)
+                    TextField("underground floors", text: $basementFloorText)
                         .keyboardType(.numberPad)
-                        .font(NMFont.pre_semibold_17)
-                    
-                    Text("층")
-                        .font(NMFont.pre_semibold_17)
+                        .font(NMFont.pre_semibold_17)                    
                 }
                 .padding(.horizontal, 24)
                 .padding(.vertical, 20)
