@@ -22,7 +22,7 @@ enum FacilityType: Int, CaseIterable, Codable {
 }
 
 extension FacilityType {
-    /// 한국어 이름
+    /// 영어 이름
     var name: String {
         switch self {
         case .apartment:
@@ -35,6 +35,21 @@ extension FacilityType {
             "Educational/Research Facility"
         case .neighborhoodLife:
             "Neighborhood Living Facility"
+        }
+    }
+    
+    var name_ko: String {
+        switch self {
+        case .apartment:
+            "공동주택"
+        case .factory:
+            "공장"
+        case .office:
+            "업무시설"
+        case .educationResearch:
+            "교육연구시설"
+        case .neighborhoodLife:
+            "근린생활시설"
         }
     }
 
