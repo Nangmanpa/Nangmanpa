@@ -32,6 +32,7 @@ struct MoneyInputView: View {
                 Text("슬라이드를 좌우로 움직여 값을 조정해주세요")
                     .font(NMFont.pre_regular_16)
             }
+            .foregroundStyle(.text1)
             .padding(.horizontal, 20)
             .padding(.bottom, 10)
             

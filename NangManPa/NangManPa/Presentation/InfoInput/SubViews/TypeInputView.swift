@@ -32,6 +32,7 @@ struct TypeInputView: View {
                     .font(NMFont.pre_regular_16)
                     .padding(.bottom, 28)
             }
+            .foregroundStyle(.text1)
             .padding(.bottom, 10)
             
             ForEach(FacilityType.allCases, id: \.rawValue) { type in

@@ -13,6 +13,8 @@ struct InfoInputView: View {
     /// 입력페이지 전환용
     @State private var pageOrder: Int = 1
     
+    @EnvironmentObject var router: Router<Path>
+    
     @State var inputData: InputModel = .init(
         moneyRange: .under10Million,
         facilityType: nil,
@@ -70,9 +72,12 @@ struct InfoInputView: View {
                     selectedFacilityType: $inputData.facilityType
                 )
             case 3:
-                ExtentInputView()
+                ExtentInputView(extent: $inputData.extent)
             case 4:
-                FloorInputView()
+                FloorInputView(
+                    groundFloor: $inputData.groundFloor,
+                    basementFloor: $inputData.undergroundFloor
+                )
             default:
                 EmptyView()
             }
@@ -103,11 +108,21 @@ struct InfoInputView: View {
                 }
                 // 입력 끝나면 사고 예측하기 화면으로 넘기기
                 else {
-                    NavigationLink {
-                        PredictView()
+                    Button {
+                        inputData.save()
+                        router.push(.predict)
                     } label: {
                         Text("사고 예측하기")
+                            .font(NMFont.pre_semibold_17)
+                            .foregroundStyle(Color.white)
+                            .padding(.vertical, 16)
+                            .frame(maxWidth: .infinity, alignment: .center)
+                            .background(
+                                RoundedRectangle(cornerRadius: 30)
+                                    .foregroundStyle(Color.keyblue)
+                            )
                     }
+                    .disabled(!isEntered)
                     
                 }
             }
