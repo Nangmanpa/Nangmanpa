@@ -10,6 +10,8 @@ import SwiftUI
 /// 공사현장의 면적 입력받기 서브뷰
 struct ExtentInputView: View {
     // MARK: Properties
+    /// 입력됐는지 확인용 변수
+    @Binding var isEntered: Bool
     
     // MARK: view
     var body: some View {
@@ -18,5 +20,5 @@ struct ExtentInputView: View {
 }
 
 #Preview {
-    ExtentInputView()
+    ExtentInputView(isEntered: .constant(true))
 }

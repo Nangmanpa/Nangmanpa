@@ -10,6 +10,7 @@ import SwiftUI
 /// 공사현장의 예산 입력받기 서브뷰
 struct MoneyInputView: View {
     // MARK: Properties
+    @Binding var selectedMoneyRange: HowMoneyBig?
     
     // MARK: view
     var body: some View {
@@ -18,5 +19,5 @@ struct MoneyInputView: View {
 }
 
 #Preview {
-    MoneyInputView()
+    MoneyInputView(selectedMoneyRange: .constant(.from100MillionTo200Million))
 }
