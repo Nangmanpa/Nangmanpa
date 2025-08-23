@@ -70,7 +70,7 @@ struct InfoInputView: View {
                     selectedFacilityType: $inputData.facilityType
                 )
             case 3:
-                ExtentInputView()
+                ExtentInputView(extent: $inputData.extent)
             case 4:
                 FloorInputView()
             default:
