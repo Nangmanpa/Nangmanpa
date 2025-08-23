@@ -39,7 +39,9 @@ struct ExtentInputView: View {
                     .font(NMFont.pre_semibold_17)
                 
                 Text("m²")
+                    .font(NMFont.pre_semibold_17)
             }
+            .foregroundStyle(.text1)
             .padding(.horizontal, 24)
             .padding(.vertical, 20)
             .background(
