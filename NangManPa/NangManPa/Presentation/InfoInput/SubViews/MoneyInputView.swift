@@ -25,11 +25,11 @@ struct MoneyInputView: View {
                     .padding(.top, 10)
                     .padding(.bottom, 16)
                 
-                Text("진행중인 건설 현장의\n예산은 얼마인가요?")
+                Text("What is the budget for\nthe ongoing construction project?")
                     .font(NMFont.pre_semibold_22)
                     .multilineTextAlignment(.leading)
                 
-                Text("슬라이드를 좌우로 움직여 값을 조정해주세요")
+                Text("Move the slider left or right to adjust the value")
                     .font(NMFont.pre_regular_16)
             }
             .foregroundStyle(.text1)
