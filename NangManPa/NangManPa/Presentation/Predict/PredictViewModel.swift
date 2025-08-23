@@ -5,15 +5,126 @@
 //  Created by 석민솔 on 8/23/25.
 //
 
+import CoreML
 import Foundation
 import SwiftUI
 
 @MainActor
 class PredictViewModel: ObservableObject {
     private let region = "Seoul"
+    private let model: MLModel
+    private var inputData: InputModel? = .load()
+
     @Published var weather: WeatherDomain? = nil
+    @Published var accidentType: AccidentType? = nil
     
-    
+//        @Published var inputData: InputModel? = .init(
+//            moneyRange: .under10Million,
+//            facilityType: .apartment,
+//            extent: 1000,
+//            groundFloor: 50,
+//            undergroundFloor: 2
+//        )
+
+    init() {
+        guard let model = Self.loadModel() else {
+            fatalError("Failed to load ML model")
+        }
+        self.model = model
+    }
+
+    // MARK: ML모델 불러오는 함수
+    private static func loadModel() -> MLModel? {
+        guard
+            let url = Bundle.main.url(
+                forResource: "NangManPaClassification",
+                withExtension: "mlmodelc"
+            )
+        else {
+            fatalError("Failed to load ML model")
+        }
+
+        guard
+            let model = try? MLModel(
+                contentsOf: url
+            )
+        else {
+            fatalError("Failed to setting ML model")
+        }
+
+        return model
+    }
+
+    // MARK: 예측 실행 함수
+    func run() -> AccidentType? {
+        if let inputData = inputData {
+            let predictedResult = predict(input: inputData)
+            if let result = predictedResult {
+                accidentType = AccidentType.init(name: result)
+                print(result, accidentType)
+                return accidentType
+            }
+        }
+        return nil
+    }
+
+    // MARK: 입력 데이터 생성 함수
+    private func makeModelInputArray(input: InputModel) -> MLFeatureProvider? {
+        if input.isValid {
+            guard let facility = input.facilityType?.name,
+                let money = input.moneyRange?.description,
+                let extent = input.extent,
+                let ground = input.groundFloor,
+                let under = input.undergroundFloor,
+                let condition = weather?.condition,
+                let temperature = weather?.temperature,
+                let humidity = weather?.humidity
+
+            else { return nil }
+
+            let dict: [String: MLFeatureValue] = [
+                "Weather": MLFeatureValue(string: condition),
+                "Temperature": MLFeatureValue(int64: Int64(temperature)),
+                "Humidity": MLFeatureValue(int64: Int64(humidity)),
+                "TotalArea": MLFeatureValue(int64: Int64(extent)),
+                "FloorsAboveGround": MLFeatureValue(int64: Int64(ground)),
+                "FloorsBelowGround": MLFeatureValue(int64: Int64(under)),
+                "Facility": MLFeatureValue(string: facility),  // String 그대로
+                "ConstructionCost": MLFeatureValue(string: money),  // String 그대로
+            ]
+
+            return try? MLDictionaryFeatureProvider(dictionary: dict)
+        } else {
+            return nil
+        }
+    }
+
+    // MARK: 예측 함수
+    private func predict(input: InputModel) -> String? {
+        guard let inputArray = makeModelInputArray(input: input) else {
+            return nil
+        }
+        let inputFeatures = inputArray
+        guard let result = try? model.prediction(from: inputFeatures) else {
+            print("error in prediction")
+            return nil
+        }
+        print(result)
+        if let label = result.featureValue(for: "AccidentType")?.stringValue {
+            return label
+        }
+        if let probs = result.featureValue(for: "AccidentTypeProbability")?
+            .dictionaryValue
+        {
+            // return the top-1 label by probability as a fallback
+            let sorted = probs.sorted {
+                ($0.value.doubleValue) > ($1.value.doubleValue)
+            }
+            if let top = sorted.first { return String(describing: top.key) }
+        }
+        return nil
+    }
+
     // MARK: weather 변수에 날씨정보 불러오기 -> view의 task에서 실행
     func loadWeather() async {
         do {
@@ -24,7 +135,7 @@ class PredictViewModel: ObservableObject {
             print("LoadWeather Error")
         }
     }
-    
+
     // MARK: API에서 날씨정보 불러오는 함수
     private func fetchWeather(region: String) async throws -> WeatherDTO {
         guard
@@ -54,115 +165,4 @@ class PredictViewModel: ObservableObject {
 
     }
 
-}
-
-// MARK: 우리가 사용하는 날씨 정보
-// 맑음, 흐림, 강우, 강설, 안개, 강풍
-struct WeatherDomain {
-    var temperature: Double
-    var condition: String
-    var region: String
-    var date: Date
-    var humidity: Int
-
-    init(temperature: Double, condition: String, region: String, humidity: Int)
-    {
-        self.temperature = temperature
-        self.condition = condition
-        self.region = region
-        self.humidity = humidity
-        self.date = Date()
-    }
-}
-
-// MARK: API에서 날씨정보 저장하기 위한 Type
-struct WeatherDTO: Decodable {
-    let coord: Coord
-    let weather: [Weather]
-    let base: String
-    let main: Main
-    let visibility: Int
-    let wind: Wind
-    let clouds: Clouds
-    let dt: Int
-    let sys: Sys
-    let timezone: Int
-    let id: Int
-    let name: String
-    let cod: Int
-}
-
-struct Coord: Decodable {
-    let lon: Double
-    let lat: Double
-}
-
-struct Weather: Decodable {
-    let id: Int
-    let main: String
-    let description: String
-    let icon: String
-}
-
-struct Main: Decodable {
-    let temp: Double
-    let feels_like: Double
-    let temp_min: Double
-    let temp_max: Double
-    let pressure: Int
-    let humidity: Int
-    let sea_level: Int?
-    let grnd_level: Int?
-}
-
-struct Wind: Decodable {
-    let speed: Double
-    let deg: Int
-}
-
-struct Clouds: Decodable {
-    let all: Int
-}
-
-struct Sys: Decodable {
-    let country: String
-    let sunrise: Int
-    let sunset: Int
-}
-
-private func mapCondition(_ main: String) -> String {
-    switch main.lowercased() {
-    case "clear":
-        return "맑음"
-    case "clouds":
-        return "흐림"
-    case "rain", "drizzle":
-        return "강우"
-    case "snow":
-        return "강설"
-    case "mist", "fog", "haze", "smoke", "dust", "sand":
-        return "안개"
-    case "thunderstorm", "squall", "tornado":
-        return "강풍"
-    default:
-        return "맑음"
-    }
-}
-
-extension WeatherDTO {
-    func toDomain() -> WeatherDomain {
-        return WeatherDomain(
-            temperature: main.temp - 273,
-            condition: mapCondition(weather.first?.main ?? ""),
-            region: name,
-            humidity: main.humidity,
-        )
-    }
-}
-
-// MARK: 네트워크 에러 enum
-enum NetworkError: Error {
-    case badURL
-    case noData
-    case decodingError
 }
