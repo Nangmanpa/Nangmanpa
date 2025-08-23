@@ -14,6 +14,10 @@ enum NMFont {
     static let pre_regular_16: Font = .pretendard(size: 16, weight: .regular)
     static let pre_semibold_17: Font = .pretendard(size: 17, weight: .semibold)
     static let pre_regular_15: Font = .pretendard(size: 15, weight: .regular)
+    static let pre_semibold_12: Font = .pretendard(size: 12, weight: .semibold)
+    static let pre_heavy_27: Font = .pretendard(size: 27, weight: .heavy)
+    static let pre_regular_17: Font = .pretendard(size: 17, weight: .regular)
+    static let pre_regular_12: Font = .pretendard(size: 12, weight: .regular)
 }
 
 #Preview {
