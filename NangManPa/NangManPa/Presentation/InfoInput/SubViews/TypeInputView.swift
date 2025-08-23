@@ -10,8 +10,8 @@ import SwiftUI
 /// 공사현장의 분류 입력받기 서브뷰
 struct TypeInputView: View {
     // MARK: Properties
-    /// 입력됐는지 확인용 변수
-    @Binding var isEntered: Bool
+    /// 입력할 분류
+    @Binding var selectedFacilityType: FacilityType?
     
     // MARK: view
     var body: some View {
@@ -20,5 +20,5 @@ struct TypeInputView: View {
 }
 
 #Preview {
-    TypeInputView(isEntered: .constant(true))
+    TypeInputView(selectedFacilityType: .constant(.apartment))
 }

@@ -10,8 +10,6 @@ import SwiftUI
 /// 공사현장의 층수 입력받기 서브뷰
 struct FloorInputView: View {
     // MARK: Properties
-    /// 입력됐는지 확인용 변수
-    @Binding var isEntered: Bool
     
     // MARK: view
     var body: some View {
@@ -20,5 +18,5 @@ struct FloorInputView: View {
 }
 
 #Preview {
-    FloorInputView(isEntered: .constant(true))
+    FloorInputView()
 }
