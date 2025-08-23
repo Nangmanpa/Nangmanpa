@@ -20,7 +20,7 @@ struct PredictionInfoView: View {
             Color(.keyblue).opacity(0.1)
                 .ignoresSafeArea()
             VStack(spacing: 16) {
-                HStack(spacing: 25) {
+                HStack(spacing: 0) {
                     VStack(alignment: .leading, spacing: 8) {
                         Text("Predicted Accident Type")
                             .predictionTitleStyle()
@@ -45,9 +45,11 @@ struct PredictionInfoView: View {
                                     .foregroundColor(.text2)
                                     .frame(alignment: .topLeading)
                                     .presentationCompactAdaptation(.popover)
+                                    .lineLimit(nil)  
                                 }
                         }
                     }
+                    .frame(width: UIScreen.main.bounds.width * 0.55)
                     Image(.redlight)
                         .resizable()
                         .scaledToFit()
@@ -67,7 +69,7 @@ struct PredictionInfoView: View {
                     .predictionNormalStyle()
                 }
             }
-            .padding(20)
+            .padding(.leading, 20)
             .padding(.bottom, 6)
         }
         .padding(0)
