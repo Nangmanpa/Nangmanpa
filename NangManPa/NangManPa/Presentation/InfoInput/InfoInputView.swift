@@ -13,6 +13,8 @@ struct InfoInputView: View {
     /// 입력페이지 전환용
     @State private var pageOrder: Int = 1
     
+    @EnvironmentObject var router: Router<Path>
+    
     @State var inputData: InputModel = .init(
         moneyRange: .under10Million,
         facilityType: nil,
@@ -106,8 +108,9 @@ struct InfoInputView: View {
                 }
                 // 입력 끝나면 사고 예측하기 화면으로 넘기기
                 else {
-                    NavigationLink {
-                        PredictView()
+                    Button {
+                        inputData.save()
+                        router.push(.predict)
                     } label: {
                         Text("사고 예측하기")
                             .font(NMFont.pre_semibold_17)

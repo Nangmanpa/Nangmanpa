@@ -11,15 +11,24 @@ struct ContentView: View {
     // MARK: Properties
     let isFirst: Bool = InputModel.load() == nil
     
+    @ObservedObject var router = Router<Path>()
+    
     // MARK: view
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $router.paths) {
             if !isFirst {
                 PredictView()
             } else {
                 OnboardingView()
+                    .navigationDestination(for: Path.self) { path in
+                        if path == .predict {
+                            PredictView()
+                                .navigationBarBackButtonHidden()
+                        }
+                    }
             }
         }
+        .environmentObject(router)
     }
 }
 
