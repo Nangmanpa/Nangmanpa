@@ -16,13 +16,14 @@ struct PredictView: View {
     // MARK: view
     var body: some View {
         VStack {
-            Text(viewModel.weather?.condition ?? "")
-        }
-        .overlay {
             if isLoading {
-                ZStack {
-                    ProgressView()
-                        .scaleEffect(1.4)
+                LoadingView()
+            } else {
+                VStack {
+                    PredictionInfoView(accidentType: viewModel.accidentType)
+                    if let accidentType = viewModel.accidentType {
+                        ChecklistView(accidentType: accidentType)
+                    }
                 }
             }
         }
@@ -30,6 +31,7 @@ struct PredictView: View {
             isLoading = true
             defer { isLoading = false }
             await viewModel.loadWeather()
+            let _ = viewModel.run()
         }
     }
 }
