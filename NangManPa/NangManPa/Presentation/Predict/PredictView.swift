@@ -28,6 +28,7 @@ struct PredictView: View {
                                 .background(.white)
                         }
                     }
+                    .ignoresSafeArea()
                 }
                 .background(Color(.keyblue).opacity(0.1))
             }
