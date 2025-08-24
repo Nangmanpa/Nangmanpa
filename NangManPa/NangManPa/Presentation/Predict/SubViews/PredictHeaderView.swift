@@ -28,7 +28,7 @@ struct PredictHeaderView: View {
                         .foregroundColor(.keyblue)
                         .frame(maxWidth: .infinity, alignment: .topLeading)
                     HStack {
-                        Text("Probability of Occurrence: 40%")
+                        Text("Probability of Occurrence: \(viewModel.OccurrenceProbability)%")
                             .predictionCaptionStyle()
                         Image(systemName: "info.circle.fill")
                             .predictionCaptionStyle()
