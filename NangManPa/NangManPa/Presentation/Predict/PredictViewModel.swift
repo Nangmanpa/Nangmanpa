@@ -13,13 +13,24 @@ import SwiftUI
 class PredictViewModel: ObservableObject {
     private let region = "Seoul"
     private let model: MLModel
-//    private var inputData: InputModel? = .load()
+    //    private var inputData: InputModel? = .load()
 
     @Published var weather: WeatherDomain? = nil
     @Published var accidentType: AccidentType? = nil
     @Published var checkedCount: Int = 0
     @Published var itemCount: Int? = nil
     @Published var lightColor: String = "redlight"
+    var OccurrenceProbability: Int {
+        guard let itemCount = itemCount, itemCount > 0 else { return 67 }
+        let ratio = Double(checkedCount) / Double(itemCount)
+        if ratio <= 0.5 {
+            return 67
+        } else if ratio == 1 {
+            return 34
+        } else {
+            return 51
+        }
+    }
 
     private var inputData: InputModel? = .init(
         moneyRange: .under10Million,
@@ -79,7 +90,7 @@ class PredictViewModel: ObservableObject {
     private func makeModelInputArray(input: InputModel) -> MLFeatureProvider? {
         if input.isValid {
             guard let facility = input.facilityType?.name_ko,
-                  let money = input.moneyRange?.description_ko,
+                let money = input.moneyRange?.description_ko,
                 let extent = input.extent,
                 let ground = input.groundFloor,
                 let under = input.undergroundFloor,
