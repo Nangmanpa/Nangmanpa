@@ -25,7 +25,7 @@ struct PredictView: View {
                         PredictionInfoView(accidentType: viewModel.accidentType)
                         if let accidentType = viewModel.accidentType {
                             ChecklistView(accidentType: accidentType, viewModel: viewModel)
-                                .background(.white)
+                                .background(.white1)
                         }
                     }
                     .ignoresSafeArea()

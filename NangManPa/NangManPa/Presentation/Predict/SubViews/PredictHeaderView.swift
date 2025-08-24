@@ -20,7 +20,7 @@ struct PredictHeaderView: View {
 
         VStack(spacing: 16) {
             HStack(spacing: 0) {
-                VStack(alignment: .leading, spacing: 8) {
+                VStack(alignment: .leading, spacing: 3) {
                     Text("Predicted Accident Type")
                         .predictionTitleStyle()
                     Text(accidentType?.engName ?? "-")
@@ -48,7 +48,7 @@ struct PredictHeaderView: View {
                                 .frame(alignment: .topLeading)
                                 .presentationCompactAdaptation(.popover)
                                 .fixedSize(horizontal: false, vertical: true) // 줄바꿈 후 높이 확장
-                                .padding(8)
+                                .padding(16)
                                 .lineLimit(nil)
                             }
                     }
@@ -66,9 +66,11 @@ struct PredictHeaderView: View {
                     )
                     .resizable()
                     .scaledToFit()
+                    .offset(x: 20)
                 }
 
             }
+            .padding(.vertical)
         }
         .padding(.horizontal, 20)
         .padding(.bottom, 16)
