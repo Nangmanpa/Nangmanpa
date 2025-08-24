@@ -11,13 +11,18 @@ import SwiftUI
 struct ChecklistView: View {
     // MARK: Properties
     let accidentType: AccidentType?
+    @ObservedObject var viewModel: PredictViewModel
     @State private var items: [ChecklistItem]
-    
-    init(accidentType: AccidentType) {
-        self.accidentType = accidentType
-        self._items = State(initialValue: accidentType.checkList.map { ChecklistItem(title: $0, isChecked: false) })
-    }
 
+    init(accidentType: AccidentType, viewModel: PredictViewModel) {
+        self.accidentType = accidentType
+        self._items = State(
+            initialValue: accidentType.checkList.map {
+                ChecklistItem(title: $0, isChecked: false)
+            }
+        )
+        self.viewModel = viewModel
+    }
 
     // MARK: view
     var body: some View {
@@ -25,20 +30,23 @@ struct ChecklistView: View {
             Text("Safety Accident Prevention Checklist")
                 .font(NMFont.pre_semibold_20)
                 .frame(maxWidth: .infinity, alignment: .topLeading)
-            VStack (spacing: 10){
+            VStack(spacing: 10) {
                 ForEach($items) { $item in
                     HStack {
                         Toggle(isOn: $item.isChecked) {
                             Text(item.title)
                                 .font(NMFont.pre_regular_17)
                                 .foregroundColor(.text1)
-                                .frame(maxWidth: .infinity, alignment: .bottomLeading)
+                                .frame(
+                                    maxWidth: .infinity,
+                                    alignment: .bottomLeading
+                                )
 
                         }
-                        .toggleStyle(CheckboxToggleStyle())
+                        .toggleStyle(CheckboxToggleStyle(viewModel: viewModel))
                     }
-                        Divider()
-                            .foregroundColor(.text3)
+                    Divider()
+                        .foregroundColor(.text3)
                 }
             }
             .padding(8)
@@ -51,7 +59,7 @@ struct ChecklistView: View {
 }
 
 #Preview {
-    ChecklistView(accidentType: .caughtBetween)
+    ChecklistView(accidentType: .caughtBetween, viewModel: PredictViewModel())
 }
 
 struct ChecklistItem: Identifiable {
@@ -61,12 +69,20 @@ struct ChecklistItem: Identifiable {
 }
 
 struct CheckboxToggleStyle: ToggleStyle {
+    @ObservedObject var viewModel: PredictViewModel
     func makeBody(configuration: Configuration) -> some View {
         HStack(alignment: .top, spacing: 8) {
             Image(configuration.isOn ? "checkbox_checked" : "checkbox_default")
                 .resizable()
                 .frame(width: 22, height: 22, alignment: .topLeading)
-                .onTapGesture { configuration.isOn.toggle() }
+                .onTapGesture {
+                    configuration.isOn.toggle()
+                    if configuration.isOn {
+                        viewModel.checkedCount += 1
+                    } else {
+                        viewModel.checkedCount -= 1
+                    }
+                }
             configuration.label
                 .font(NMFont.pre_regular_17)
                 .foregroundColor(.text1)
