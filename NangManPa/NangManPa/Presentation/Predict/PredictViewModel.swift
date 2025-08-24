@@ -146,6 +146,9 @@ class PredictViewModel: ObservableObject {
 
     // MARK: API에서 날씨정보 불러오는 함수
     private func fetchWeather(region: String) async throws -> WeatherDTO {
+        
+        try await Task.sleep(nanoseconds: 1_500_000_000)
+        
         guard
             let url = URL(
                 string:

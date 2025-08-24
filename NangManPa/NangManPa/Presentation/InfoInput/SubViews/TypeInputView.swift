@@ -24,7 +24,7 @@ struct TypeInputView: View {
                     .padding(.top, 10)
                     .padding(.bottom, 16)
                 
-                Text("What is the subcategory\nof the building under construction?")
+                Text("What is the building's use type?")
                     .font(NMFont.pre_semibold_22)
                     .multilineTextAlignment(.leading)
                 
