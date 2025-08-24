@@ -16,45 +16,11 @@ struct PredictionInfoView: View {
 
     // MARK: view
     var body: some View {
-        ZStack {
-            Color(.keyblue).opacity(0.1)
-                .ignoresSafeArea()
+
             VStack(spacing: 16) {
-                HStack(spacing: 0) {
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text("Predicted Accident Type")
-                            .predictionTitleStyle()
-                        Text(accidentType?.engName ?? "-")
-                            .font(NMFont.pre_heavy_27)
-                            .foregroundColor(.keyblue)
-                            .frame(maxWidth: .infinity, alignment: .topLeading)
-                        HStack {
-                            Text("Probability of Occurrence: 40%")
-                                .predictionCaptionStyle()
-                            Image(systemName: "info.circle.fill")
-                                .predictionCaptionStyle()
-                                .onTapGesture {
-                                    showPopover.toggle()
-                                }
-                                .popover(isPresented: $showPopover) {
-                                    Text(
-                                        "By performing the safety accident prevention checklist below, \nyou can reduce the probability of an accident"
-                                    )
-                                    .padding(16)
-                                    .font(NMFont.pre_regular_12)
-                                    .foregroundColor(.text2)
-                                    .frame(alignment: .topLeading)
-                                    .presentationCompactAdaptation(.popover)
-                                    .lineLimit(nil)  
-                                }
-                        }
-                    }
-                    .frame(width: UIScreen.main.bounds.width * 0.55)
-                    Image(.redlight)
-                        .resizable()
-                        .scaledToFit()
-                }
+
                 VStack(alignment: .leading, spacing: 8) {
+                    
                     Text("Prediction Basis")
                         .predictionTitleStyle()
                     Text(accidentType?.proof ?? "-")
@@ -69,11 +35,8 @@ struct PredictionInfoView: View {
                     .predictionNormalStyle()
                 }
             }
-            .padding(.leading, 20)
-            .padding(.bottom, 6)
-        }
-        .padding(0)
-
+            .padding(.horizontal, 20)
+            .padding(.bottom, 26)
     }
 }
 

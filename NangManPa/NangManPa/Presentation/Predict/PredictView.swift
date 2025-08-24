@@ -19,12 +19,17 @@ struct PredictView: View {
             if isLoading {
                 LoadingView()
             } else {
-                VStack {
-                    PredictionInfoView(accidentType: viewModel.accidentType)
-                    if let accidentType = viewModel.accidentType {
-                        ChecklistView(accidentType: accidentType)
+                VStack(spacing: 0) {
+                    PredictHeaderView(accidentType: viewModel.accidentType, viewModel: viewModel)
+                    ScrollView {
+                        PredictionInfoView(accidentType: viewModel.accidentType)
+                        if let accidentType = viewModel.accidentType {
+                            ChecklistView(accidentType: accidentType, viewModel: viewModel)
+                                .background(.white)
+                        }
                     }
                 }
+                .background(Color(.keyblue).opacity(0.1))
             }
         }
         .task {

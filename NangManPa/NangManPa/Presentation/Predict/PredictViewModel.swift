@@ -13,18 +13,21 @@ import SwiftUI
 class PredictViewModel: ObservableObject {
     private let region = "Seoul"
     private let model: MLModel
-    private var inputData: InputModel? = .load()
+//    private var inputData: InputModel? = .load()
 
     @Published var weather: WeatherDomain? = nil
     @Published var accidentType: AccidentType? = nil
-    
-//        @Published var inputData: InputModel? = .init(
-//            moneyRange: .under10Million,
-//            facilityType: .apartment,
-//            extent: 1000,
-//            groundFloor: 50,
-//            undergroundFloor: 2
-//        )
+    @Published var checkedCount: Int = 0
+    @Published var itemCount: Int? = nil
+    @Published var lightColor: String = "redlight"
+
+    private var inputData: InputModel? = .init(
+        moneyRange: .under10Million,
+        facilityType: .apartment,
+        extent: 1000,
+        groundFloor: 50,
+        undergroundFloor: 2
+    )
 
     init() {
         guard let model = Self.loadModel() else {
@@ -60,7 +63,11 @@ class PredictViewModel: ObservableObject {
         if let inputData = inputData {
             let predictedResult = predict(input: inputData)
             if let result = predictedResult {
+                // 타입 저장
                 accidentType = AccidentType.init(name: result)
+                // 체크리스트 설정
+                itemCount = accidentType?.checkList.count
+                checkedCount = 0
                 print(result, accidentType)
                 return accidentType
             }
@@ -71,8 +78,8 @@ class PredictViewModel: ObservableObject {
     // MARK: 입력 데이터 생성 함수
     private func makeModelInputArray(input: InputModel) -> MLFeatureProvider? {
         if input.isValid {
-            guard let facility = input.facilityType?.name,
-                let money = input.moneyRange?.description,
+            guard let facility = input.facilityType?.name_ko,
+                  let money = input.moneyRange?.description_ko,
                 let extent = input.extent,
                 let ground = input.groundFloor,
                 let under = input.undergroundFloor,
@@ -105,6 +112,7 @@ class PredictViewModel: ObservableObject {
             return nil
         }
         let inputFeatures = inputArray
+        print(inputFeatures)
         guard let result = try? model.prediction(from: inputFeatures) else {
             print("error in prediction")
             return nil
