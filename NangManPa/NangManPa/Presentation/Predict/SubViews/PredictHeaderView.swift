@@ -49,16 +49,21 @@ struct PredictHeaderView: View {
                         }
                     }
                     .frame(width: UIScreen.main.bounds.width * 0.55)
-                    Image(.redlight)
-                        .resizable()
-                        .scaledToFit()
+                    
+                    if let itemCount = viewModel.itemCount {
+                        let ratio = Double(viewModel.checkedCount) / Double(itemCount)
+                        
+                        Image(ratio < 0.5 ? .redlight : (ratio == 1 ? .greenlight : .yellowlight))
+                            .resizable()
+                            .scaledToFit()
+                    }
+                            
+                    
+                    
                 }
             }
-            .padding(.leading, 20)
-            .padding(.bottom, 6)
-        }
-        .padding(0)
-
+            .padding(.horizontal, 20)
+            .padding(.bottom, 16)
     }
 }
 
