@@ -18,57 +18,66 @@ struct PredictHeaderView: View {
     // MARK: view
     var body: some View {
 
-            VStack(spacing: 16) {
-                HStack(spacing: 0) {
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text("Predicted Accident Type")
-                            .predictionTitleStyle()
-                        Text(accidentType?.engName ?? "-")
-                            .font(NMFont.pre_heavy_27)
-                            .foregroundColor(.keyblue)
-                            .frame(maxWidth: .infinity, alignment: .topLeading)
-                        HStack {
-                            Text("Probability of Occurrence: 40%")
-                                .predictionCaptionStyle()
-                            Image(systemName: "info.circle.fill")
-                                .predictionCaptionStyle()
-                                .onTapGesture {
-                                    showPopover.toggle()
-                                }
-                                .popover(isPresented: $showPopover) {
-                                    Text(
-                                        "By performing the safety accident prevention checklist below, \nyou can reduce the probability of an accident"
-                                    )
-                                    .padding(16)
-                                    .font(NMFont.pre_regular_12)
-                                    .foregroundColor(.text2)
-                                    .frame(alignment: .topLeading)
-                                    .presentationCompactAdaptation(.popover)
-                                    .lineLimit(nil)
-                                }
-                        }
+        VStack(spacing: 16) {
+            HStack(spacing: 0) {
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Predicted Accident Type")
+                        .predictionTitleStyle()
+                    Text(accidentType?.engName ?? "-")
+                        .font(NMFont.pre_heavy_27)
+                        .foregroundColor(.keyblue)
+                        .frame(maxWidth: .infinity, alignment: .topLeading)
+                    HStack {
+                        Text("Probability of Occurrence: 40%")
+                            .predictionCaptionStyle()
+                        Image(systemName: "info.circle.fill")
+                            .predictionCaptionStyle()
+                            .onTapGesture {
+                                showPopover.toggle()
+                            }
+                            .popover(
+                                isPresented: $showPopover,
+                                attachmentAnchor: .rect(.bounds),
+                                arrowEdge: .top
+                            ) {
+                                Text(
+                                    "By performing the safety accident prevention checklist below, \nyou can reduce the probability of an accident"
+                                )
+                                .font(NMFont.pre_regular_12)
+                                .foregroundColor(.text2)
+                                .frame(alignment: .topLeading)
+                                .presentationCompactAdaptation(.popover)
+                                .fixedSize(horizontal: false, vertical: true) // 줄바꿈 후 높이 확장
+                                .padding(8)
+                                .lineLimit(nil)
+                            }
                     }
-                    .frame(width: UIScreen.main.bounds.width * 0.55)
-                    
-                    if let itemCount = viewModel.itemCount {
-                        let ratio = Double(viewModel.checkedCount) / Double(itemCount)
-                        
-                        Image(ratio < 0.5 ? .redlight : (ratio == 1 ? .greenlight : .yellowlight))
-                            .resizable()
-                            .scaledToFit()
-                    }
-                            
-                    
-                    
                 }
+                .frame(width: UIScreen.main.bounds.width * 0.55)
+
+                if let itemCount = viewModel.itemCount {
+                    let ratio =
+                        Double(viewModel.checkedCount) / Double(itemCount)
+
+                    Image(
+                        ratio < 0.5
+                            ? .redlight
+                            : (ratio == 1 ? .greenlight : .yellowlight)
+                    )
+                    .resizable()
+                    .scaledToFit()
+                }
+
             }
-            .padding(.horizontal, 20)
-            .padding(.bottom, 16)
+        }
+        .padding(.horizontal, 20)
+        .padding(.bottom, 16)
     }
 }
 
 #Preview {
-//    PredictHeaderView(
-//        viewMdoel: PredictViewModel(),accidentType: .caughtBetween
-//    )
+    PredictHeaderView(
+        accidentType: .caughtBetween,
+        viewModel: PredictViewModel()
+    )
 }
