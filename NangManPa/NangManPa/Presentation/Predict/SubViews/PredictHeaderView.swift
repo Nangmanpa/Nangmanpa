@@ -13,12 +13,11 @@ struct PredictHeaderView: View {
     let accidentType: AccidentType?
     @State var showPopover: Bool = false
     @State var offset: (CGSize, CGSize) = (.zero, .zero)
+    @ObservedObject var viewModel: PredictViewModel
 
     // MARK: view
     var body: some View {
-        ZStack {
-            Color(.keyblue).opacity(0.1)
-                .ignoresSafeArea()
+
             VStack(spacing: 16) {
                 HStack(spacing: 0) {
                     VStack(alignment: .leading, spacing: 8) {
@@ -45,7 +44,7 @@ struct PredictHeaderView: View {
                                     .foregroundColor(.text2)
                                     .frame(alignment: .topLeading)
                                     .presentationCompactAdaptation(.popover)
-                                    .lineLimit(nil)  
+                                    .lineLimit(nil)
                                 }
                         }
                     }
@@ -64,5 +63,7 @@ struct PredictHeaderView: View {
 }
 
 #Preview {
-    PredictionInfoView(accidentType: .caughtBetween)
+//    PredictHeaderView(
+//        viewMdoel: PredictViewModel(),accidentType: .caughtBetween
+//    )
 }
