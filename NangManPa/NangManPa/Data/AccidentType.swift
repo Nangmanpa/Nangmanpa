@@ -66,9 +66,9 @@ extension AccidentType {
     var engName: String {
     switch self {
     case .fall:
-        "fall"
+        "Fall"
     case .fallFromHeight:
-        "Fall FromHeight"
+        "Fall from Height"
     case .struckByObject:
         "Struck by Object"
     case .caughtBetween:
