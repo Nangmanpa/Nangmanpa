@@ -23,7 +23,7 @@ class PredictViewModel: ObservableObject {
     var OccurrenceProbability: Int {
         guard let itemCount = itemCount, itemCount > 0 else { return 67 }
         let ratio = Double(checkedCount) / Double(itemCount)
-        if ratio <= 0.5 {
+        if ratio < 0.5 {
             return 67
         } else if ratio == 1 {
             return 34
